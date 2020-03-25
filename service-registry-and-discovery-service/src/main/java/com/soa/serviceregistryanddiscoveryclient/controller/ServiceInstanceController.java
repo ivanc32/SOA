@@ -29,7 +29,7 @@ public class ServiceInstanceController {
         return "Hello world from Alice";
     }
 
-    @RequestMapping("/service-instances")
+    @RequestMapping("/call-bob")
     public String serviceInstancesByApplicationName() throws IOException {
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
@@ -41,7 +41,7 @@ public class ServiceInstanceController {
 
         HttpEntity entity = response.getEntity();
         if (entity != null) {
-            return EntityUtils.toString(entity);
+            return EntityUtils.toString(entity) + " through Alice";
         }
 
         return "";

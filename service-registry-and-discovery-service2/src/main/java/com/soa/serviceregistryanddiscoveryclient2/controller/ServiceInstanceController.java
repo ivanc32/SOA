@@ -8,16 +8,11 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController("")
 public class ServiceInstanceController {
@@ -33,7 +28,7 @@ public class ServiceInstanceController {
         return "Hello world from Bob";
     }
 
-    @RequestMapping("/service-instances")
+    @RequestMapping("/call-alice")
     public String serviceInstancesByApplicationName() throws IOException {
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
@@ -45,7 +40,7 @@ public class ServiceInstanceController {
 
         HttpEntity entity = response.getEntity();
         if (entity != null) {
-            return EntityUtils.toString(entity);
+            return EntityUtils.toString(entity) + " through Bob";
         }
 
         return "";
