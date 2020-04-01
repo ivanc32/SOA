@@ -17,10 +17,10 @@ import java.io.IOException;
 @RestController("")
 public class ServiceInstanceController {
 
-    private EurekaClient discoveryClient;
+    private EurekaClient eurekaClient;
 
-    public ServiceInstanceController(@Qualifier("eurekaClient") EurekaClient discoveryClient) {
-        this.discoveryClient = discoveryClient;
+    public ServiceInstanceController(@Qualifier("eurekaClient") EurekaClient eurekaClient) {
+        this.eurekaClient = eurekaClient;
     }
 
     @RequestMapping("/")
@@ -32,7 +32,7 @@ public class ServiceInstanceController {
     public String serviceInstancesByApplicationName() throws IOException {
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
-        HttpGet request = new HttpGet(this.discoveryClient
+        HttpGet request = new HttpGet(this.eurekaClient
                 .getNextServerFromEureka("Alice", false)
                 .getHomePageUrl());
 
@@ -42,6 +42,8 @@ public class ServiceInstanceController {
         if (entity != null) {
             return EntityUtils.toString(entity) + " through Bob";
         }
+
+        response.close();
 
         return "";
     }
